@@ -1,3 +1,6 @@
+/*
+This is the memento
+ */
 import java.util.ArrayList;
 class IceCreamState {
     private int scoopNum;

@@ -1,3 +1,5 @@
+//This is the caretaker class
+//caretaker stores and restores states from memento
 import java.util.ArrayList;
 class IceCreamStateTaker {
     private ArrayList<IceCreamState> states = new ArrayList<IceCreamState>();

@@ -1,6 +1,9 @@
 /* This class is used to model the properties and behaviors of an ice cream cone.
    There are currently restriction on the construction of the cone: only one
    flavor of ice cream is allowed. */
+/*
+This is the originator
+ */
    import java.util.*;
    public class AdvancedIceCreamCone {
        private int numberOfScoops;
@@ -11,9 +14,9 @@
    
    //the default constructor creates a one scoop, vanilla ice cream cone using the regular type of cone and no toppings
        public AdvancedIceCreamCone() {
-           numberOfScoops=1;
-           flavor="vanilla";
-           typeOfCone="regular";
+           numberOfScoops=0;
+           flavor="";
+           typeOfCone="";
        }
    /*this constructor lets you create an ice cream code to your liking. It takes in three parameters:
      the number of scoops, the flavor of the ice cream and the type of cone */
@@ -74,5 +77,19 @@
            return ("The number of scoops is " + numberOfScoops + ". The flavor is " +
              flavor + ". And the type of cone is " + typeOfCone + " and the toppings are: " + getToppings());
          }
+       public IceCreamMemento save() {
+           System.out.println("Originator: Saving to Memento.");
+           return new IceCreamMemento(this);
+       }
+       public AdvancedIceCreamCone restore(IceCreamMemento m) {
+           AdvancedIceCreamCone mc = m.getSavedCone();
+           System.out.println("saved cone: " + mc);
+           numberOfScoops=mc.getNumberOfScoops();
+           flavor=mc.getFlavor();
+           typeOfCone=mc.getTypeOfCone();
+           toppings = mc.getToppings();
+           System.out.println("Originator: State after restoring from Memento: " + this);
+           return mc;
+       }
    
    }
