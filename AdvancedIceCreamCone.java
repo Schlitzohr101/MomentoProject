@@ -41,6 +41,12 @@ This is the originator
        public void addScoop() {
            numberOfScoops=numberOfScoops+1;
        }
+
+    //this method allows you to add multiple scoops at a time   
+       public void addScoop(int scoops) {
+           numberOfScoops += scoops;
+       }
+
    //this method allows you to change the ice cream flavor
        public void setFlavor(String flv) {
                flavor=flv;
@@ -61,7 +67,8 @@ This is the originator
    
     //this method allows for the saving of the instance variables  
        public IceCreamState saveState() {
-           return new IceCreamState(numberOfScoops,flavor,typeOfCone,toppings);
+            System.out.println("Originator: State after restoring from Memento: " + this);
+            return new IceCreamState(numberOfScoops,flavor,typeOfCone,toppings);
        }
    
     //this method allows restoration of this object from a state
@@ -77,19 +84,16 @@ This is the originator
            return ("The number of scoops is " + numberOfScoops + ". The flavor is " +
              flavor + ". And the type of cone is " + typeOfCone + " and the toppings are: " + getToppings());
          }
-       public IceCreamMemento save() {
-           System.out.println("Originator: Saving to Memento.");
-           return new IceCreamMemento(this);
-       }
-       public AdvancedIceCreamCone restore(IceCreamMemento m) {
-           AdvancedIceCreamCone mc = m.getSavedCone();
-           System.out.println("saved cone: " + mc);
-           numberOfScoops=mc.getNumberOfScoops();
-           flavor=mc.getFlavor();
-           typeOfCone=mc.getTypeOfCone();
-           toppings = mc.getToppings();
-           System.out.println("Originator: State after restoring from Memento: " + this);
-           return mc;
-       }
+
+    //    public AdvancedIceCreamCone restore(IceCreamState state) {
+    //        AdvancedIceCreamCone mc = ();
+    //        System.out.println("saved cone: " + mc);
+    //        numberOfScoops=mc.getNumberOfScoops();
+    //        flavor=mc.getFlavor();
+    //        typeOfCone=mc.getTypeOfCone();
+    //        toppings = mc.getToppings();
+    //        System.out.println("Originator: State after restoring from Memento: " + this);
+    //        return mc;
+    //    }
    
    }

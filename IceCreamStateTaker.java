@@ -5,6 +5,9 @@ class IceCreamStateTaker {
     private ArrayList<IceCreamState> states = new ArrayList<IceCreamState>();
 
     public void add(IceCreamState s) {
+
+        //need to save this incoming state to a file within this 
+
         states.add(s);
     }
 
