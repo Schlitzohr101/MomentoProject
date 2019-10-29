@@ -11,6 +11,7 @@ public class Tester {
     }
     public static void Create(){
         Scanner input = new Scanner(System.in);
+        IceCreamStateTaker manager = new IceCreamStateTaker();
         AdvancedIceCreamCone IC = new AdvancedIceCreamCone();
         char choice;
         int Tcount = 0;
@@ -45,25 +46,14 @@ public class Tester {
             System.out.println("Toppings?(y/n)");
             choice = Character.toUpperCase(input.nextLine().charAt(0));
             while(choice!='N') {
-                System.out.println("Choose a topping");
-                TMenu();
-                char toppingchoice = Character.toUpperCase(input.nextLine().charAt(0));
-                switch (toppingchoice) {
-                    case 'P':
-                        IC.addToppings("Peanut");
-                        break;
-                    case 'S':
-                        IC.addToppings("Waffle");
-                        break;
-                    case 'C':
-                        IC.addToppings("Traffic");
-                        break;
-                }
+                System.out.println("Enter a topping");
+                IC.addToppings(input.nextLine());
                 Tcount++;
                 System.out.println("More Toppings?(y/n)");
                 choice = Character.toUpperCase(input.nextLine().charAt(0));
                 //Arraylist.add<> "top" variable
             }
+            manager.add(IC.saveState());
         }
     }
 
@@ -109,7 +99,5 @@ public class Tester {
     public static void CMenu(){
         System.out.println("Cones:\nS)ugar\nW)affle\nT)raffic");
     }
-    public static void TMenu(){
-        System.out.println("Toppings: \nP)eanuts(Warning contains Peanuts)\nS)prinkles\nC)herries");
-    }
+
 }
