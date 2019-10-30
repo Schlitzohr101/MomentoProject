@@ -20,7 +20,7 @@ This is the originator
        }
    /*this constructor lets you create an ice cream code to your liking. It takes in three parameters:
      the number of scoops, the flavor of the ice cream and the type of cone */
-       public AdvancedIceCreamCone(int ns,String flv,String cone) {
+       public AdvancedIceCreamCone(String flv,String cone,int ns) {
            numberOfScoops=ns;
            flavor=flv;
            typeOfCone=cone;

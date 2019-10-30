@@ -2,27 +2,77 @@ import java.util.*;
 public class Tester {
     /* This class is used to test the functionality of the IceCreamCone class */
     public static void main(String[] args) {
-        // Scanner in = new Scanner(System.in);
-        // AdvancedIceCreamCone IC = new AdvancedIceCreamCone();
-        // char choice;
-        // choice = Character.toUpperCase(in.nextLine().charAt(0));
-        Create();
+        System.out.println("Welcome to Mimi's Mini Ice Cream shop!");
+        System.out.println("We know making decisions is hard :/");
+        System.out.println("Here we let you create 4 cones of our limited menu\nbefore forcing you to choose one!");
 
-    }
-    public static void Create(){
-        Scanner input = new Scanner(System.in);
+        Create("Vanilla");
+        caretaker.addMemento( ICC.save());
+        Create("Chocolate");
+        caretaker.addMemento( ICC.save());
+        Create("Strawberry");
+        caretaker.addMemento( ICC.save());
+        Create("Mimi's Mint");
+        caretaker.addMemento( ICC.save());
+        System.out.println("Ok, which cone would you like?");
+        FinalChoice();
+        char choice = FinalChoice();
+        if(choice!='V'||'C'||'S'||'M') {
+            System.out.println("Ok seriously, you have to pick a valid flavor.");
+            FinalChoice();
+            char choice = FinalChoice();    
+        }else if(choice=='V') {
+            ICC.restore(caretaker.getMemento("Vanilla"));
+        }else if(choice=='C') {
+            ICC.restore(caretaker.getMemento("Chocolate"));
+        }else if(choice=='S') {
+            ICC.restore(caretaker.getMemento("Strawberry"));
+        }else if(choice=='M') {
+            ICC.restore(caretaker.getMemento("Mimi's Mint"));
+        }
+
+    public static void Create(String x) {
+        int scoopCount = 1;
+        Scanner in = new Scanner(System.in);
         AdvancedIceCreamCone IC = new AdvancedIceCreamCone();
         char choice;
-        int Tcount = 0;
         choice = ' ';
-        int scoops;
-        System.out.println("Welcome to Mimi's Ice Cream shop!");
-        while(choice!='Q'){
-            System.out.println("Select a Ice Cream Flavor");
-            System.out.print("Flavors:  V)anilla  C)hocolate  S)trawberry  M)imi's Mint\n:");
-            choice = Character.toUpperCase(input.nextLine().charAt(0));
+        System.out.println("Please create a" + x + " cone");
+        CMenu();
+        choice = Character.toUpperCase(in.nextLine().charAt(0));
+        String coneType = "";
+        if (choice == 'S') {
+            coneType = "Sugar";
+        } else if (choice == 'W') {
+            coneType = "Waffle";
+        } else if (choice == 'T') {
+            coneType = "Traffic";
+        } else {
+            System.out.println("We dont have that cone please choose another");
+            CMenu();
+        }
+        System.out.println("You currently have one scoop of" + x + ",would you like another?(Y/N)");
+        choice = Character.toUpperCase(in.nextLine().charAt(0));
+        while (choice != 'N') {
+            scoopCount++;
+            System.out.println("Scoop added. Would you like another?");
+            choice = Character.toUpperCase(in.nextLine().charAt(0));
+        }
+        System.out.println("Would you like any toppings?(Y/N)");
+        choice = Character.toUpperCase(in.nextLine().charAt(0));
+        while (choice != 'N') {
+            String topping = input.nextLine();
+            IC.addToppings(topping);
+            System.out.println("Would you like any more toppings?");
+            choice = Character.toUpperCase(in.nextLine().charAt(0));
+        }
+        IC = new AdvancedIceCreamCone(x, coneType, scoopCount);
+    }
+
+
+        /*
             do {
-                
+                //input handling
             } while (ICtaker(choice) != null);
             IC.setFlavor(ICtaker(choice));
             System.out.println("How many scoops?");
@@ -30,7 +80,7 @@ public class Tester {
             IC.addScoop(scoops);
             System.out.println("What type of cone?");
             CMenu();
-            choice = Character.toUpperCase(input.nextLine().charAt(0));
+            coneChoice = Character.toUpperCase(input.nextLine().charAt(0));
             switch (choice) {
                 case 'S':
                     IC.setTypeOfCone("Sugar");
@@ -44,25 +94,12 @@ public class Tester {
             }
             System.out.println("Toppings?(y/n)");
             choice = Character.toUpperCase(input.nextLine().charAt(0));
-            while(choice!='N') {
-                System.out.println("Choose a topping");
-                TMenu();
-                char toppingchoice = Character.toUpperCase(input.nextLine().charAt(0));
-                switch (toppingchoice) {
-                    case 'P':
-                        IC.addToppings("Peanut");
-                        break;
-                    case 'S':
-                        IC.addToppings("Waffle");
-                        break;
-                    case 'C':
-                        IC.addToppings("Traffic");
-                        break;
-                }
                 Tcount++;
                 System.out.println("More Toppings?(y/n)");
                 choice = Character.toUpperCase(input.nextLine().charAt(0));
                 //Arraylist.add<> "top" variable
+                */
+
             }
         }
     }
@@ -107,9 +144,17 @@ public class Tester {
         return temp.get(i);
     }
     public static void CMenu(){
+        System.out.println("What kind of cone would you like?");
         System.out.println("Cones:\nS)ugar\nW)affle\nT)raffic");
     }
     public static void TMenu(){
         System.out.println("Toppings: \nP)eanuts(Warning contains Peanuts)\nS)prinkles\nC)herries");
     }
+    public static void FinalChoice(){
+        Scanner in=new Scanner(System.in);
+        char choice;
+        System.out.println("V)anilla\nC)hocolate\nS)trawberry\nM)imi's Mint");
+        return choice=Character.toUpperCase(in.nextLine().charAt(0));
+        }
+
 }
