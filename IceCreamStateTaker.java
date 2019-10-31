@@ -8,13 +8,15 @@
 //caretaker stores and restores states from memento
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Scanner;
-import java.io.File;
-import java.io.PrintWriter;
+import java.io.ObjectOutputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileInputStream;
+import java.io.ObjectInputStream;
+import java.io.IOException;
 class IceCreamStateTaker {
     private ArrayList<IceCreamState> states = new ArrayList<IceCreamState>();
-    PrintWriter writer;
+    ObjectOutputStream writer;
 
     /**
      * add: 
@@ -43,52 +45,31 @@ class IceCreamStateTaker {
      * @return state with the flavor
      * @throws FileNotFoundException if the file cannot be opened
      */
-    public IceCreamState getState(String name) throws FileNotFoundException{
+    public IceCreamState getState(String name) throws Exception{
         IceCreamState newState = new IceCreamState();
         //instantiate objects
-        File file = new File("states.txt");
-        Scanner reader = new Scanner(System.in);
-        String[] split;
         boolean found = false;
         try {
             //make sure the file exist
-            reader = new Scanner(file);
+            FileInputStream file = new FileInputStream("states.dat");
+            ObjectInputStream reader = new ObjectInputStream(file);
             do {
-                String stateStr = reader.nextLine();
-                //split based on the delimiter
-                split = stateStr.split(";");
-                if (split[0].equals(name)) {
-                    //the flavor has been found
-                    found = true;
-                }
-            } while (reader.hasNext());
+                newState = (IceCreamState) reader.readObject();
+            } while (!newState.getFlavor().equals(name));
+            if(newState.getFlavor().equals(name)) {
+                found = true;
+            }
             reader.close();
-        } catch (Exception e) {
+        } catch (IOException e) {
             //handle error
             System.out.print("Error in reading from file\nException: ");
-            System.out.println(e);
-            reader.close();
+            e.printStackTrace();
             throw e;
+        } catch (ClassNotFoundException e) {
+            System.out.println("Error in reading from file\nException: ");
+            e.printStackTrace();
         }
-        if (found) {
-            //if we actually found the flavor and didn't reach eof
-            for (int i = 0; i < split.length; i++) {
-                //build state from values read in
-                switch (i) {
-                    case 0: newState.setFlavor(split[i]);
-                    break;
-                    case 1: newState.setScoopNum(Integer.parseInt(split[i]));
-                    break;
-                    case 2: newState.setConeType(split[i]);
-                    break;
-                    case 3: String[] toppings = split[i].split(",");
-                            newState.setToppings(new ArrayList<String>(Arrays.asList(toppings)));
-                            break;
-                    default: System.out.print("Error in parsing state from reader split");
-                    break;
-                }
-            }
-        } else {
+        if(!found) {
             System.out.println("It would seem our records do not have" + name + ". What a shame");
         }
         return newState;
@@ -101,20 +82,20 @@ class IceCreamStateTaker {
      */
     public void writeStates() {
         try {
-            PrintWriter writer = new PrintWriter("states.txt");
+            FileOutputStream file = new FileOutputStream("states.dat");
+            writer = new ObjectOutputStream(file);
             for (IceCreamState state : states) {
-                writer.write(state.getFlavor()+";");
-                writer.write(state.getScoopNum()+";");
-                writer.write(state.getConeType()+";");
-                for (int i = 0; i < state.getToppings().size(); i++) {
-                    writer.write(state.getToppings().get(i) + (i+1==state.getToppings().size() ? "" : ","));
-                }
-                writer.write("\n");
+                writer.writeObject(state);
             }
             writer.close();
-        } catch (Exception e) {
+        } catch (IOException e) {
             System.out.print("Error writing to \"states.txt\" \nException found: ");
-            System.out.print(e);
+            e.printStackTrace();
         }
     }
+
+    // @SuppressWarnings("unchecked")
+    // private static <T> T castToAnything(Object obj) {
+    //     return (T) obj;
+    // }
 }

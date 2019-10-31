@@ -8,11 +8,14 @@
 This is the memento
  */
 import java.util.ArrayList;
-class IceCreamState {
+import java.io.Serializable;
+class IceCreamState implements Serializable {
     private int scoopNum;
     private String flavor;
     private String coneType;
     private ArrayList<String> toppings;
+    
+    //public static final long serialVersionUID = 0;
 
     /**
      * IceCreamState: 

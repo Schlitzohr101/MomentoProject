@@ -1,4 +1,0 @@
-Vanilla;1;Sugar;
-Chocolate;1;Sugar;
-Strawberry;1;Sugar;
-Mimi's Mint;1;Sugar;

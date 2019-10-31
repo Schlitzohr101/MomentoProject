@@ -49,8 +49,9 @@ public class Tester {
             } catch (Exception e) {
                 // error handleing if fileNotFound
                 done = true;
-                System.out.print(
+                System.out.println(
                         "Mimi's Ice Cream shop has burned all records of your Ice cream, we apologize.\nPlease leave the store");
+                e.printStackTrace();
                 break;
             }
         }
@@ -66,7 +67,7 @@ public class Tester {
                 .valueOf((priceTaker(choice) * IC.getNumberOfScoops()) + (IC.getToppings().size() * .5))
                 .setScale(2, RoundingMode.HALF_UP).doubleValue();
         builder.append("Your total is " + String.format("$%.2f", total) + " Please Pay immediately\n");
-        builder.append("Goodbye for an extended period of time!\n");
+        builder.append("Please come back after an extended period of time!\n");
         System.out.print(builder.toString());
     }
 
